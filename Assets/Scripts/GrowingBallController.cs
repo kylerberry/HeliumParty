@@ -144,6 +144,8 @@ public class GrowingBallController : MonoBehaviour
             return;
         }
 
+        currentCollision = collision;
+
         hasRoomToGrow = !collision.gameObject.CompareTag("WorldBounds") &&
             !collision.gameObject.CompareTag("ReleasedBall") &&
             !collision.gameObject.CompareTag("Obstacle");

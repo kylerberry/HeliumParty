@@ -43,7 +43,7 @@ public class ObstacleGenerator : MonoBehaviour
         }
     }
 
-    bool PointIntersectsObstacles(Vector3 point)
+    public bool PointIntersectsObstacles(Vector3 point)
     {
         for (int i = 0; i < obstacles.Count; i++)
         {
