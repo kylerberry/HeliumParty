@@ -11,6 +11,7 @@ public class BallGenerator : MonoBehaviour
 
     GameObject currGrowingBall;
     GameObject currReleasedBall;
+    GameObject obstacleManager;
     bool clickEnabled = false;
 
     public float ballCoverage = 0.0f;
@@ -18,6 +19,7 @@ public class BallGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        obstacleManager = GameObject.Find("ObstacleManager");
         releasedBalls = new List<GameObject>();
     }
 
@@ -83,33 +85,15 @@ public class BallGenerator : MonoBehaviour
         return false;
     }
 
-    // Does a given released ball intersect any releasedBalls
-/*    private bool isBallOverlapBalls(GameObject ball)
-    {
-        // see if 1 ball overlaps the others is on a released ball
-        foreach (GameObject existing in releasedBalls)
-        {
-            if (existing == null || ball == existing)
-                continue;
-
-            if (IsPointInsideSphere(
-                ball.GetComponent<CircleCollider2D>().transform.position,
-                existing.GetComponent<CircleCollider2D>()))
-            {
-                return true;
-            }
-        }
-        return false;
-    }*/
-
     // Create a GrowingBall
     private void HandleInput(Vector3 inputPosition)
     {
         Vector3 mPosInWorld = Camera.main.ScreenToWorldPoint(inputPosition);
         mPosInWorld.z = 0.0f;
 
-        // can't create ball inside another
-        if (IsPointOverlapBalls(mPosInWorld))
+        // can't create ball inside another ball or obstacle
+        if (IsPointOverlapBalls(mPosInWorld) ||
+            obstacleManager.GetComponent<ObstacleGenerator>().PointIntersectsObstacles(mPosInWorld))
         {
             return;
         }
