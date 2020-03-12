@@ -109,7 +109,7 @@ public class BallGenerator : MonoBehaviour
             return;
 
         // can't release ball inside another ball, worldbounds or obstacle
-        if (currGrowingBall.GetComponent<GrowingBallController>().isContainedInCollider())
+        if (currGrowingBall.GetComponent<GrowingBallController>().isContainedInAForbiddenCollider())
             return;
 
         // limit total balls to 64 by destroying the oldest
