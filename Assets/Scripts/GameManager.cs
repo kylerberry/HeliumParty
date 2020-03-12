@@ -128,7 +128,7 @@ public class GameManager : MonoBehaviour
     public void LevelBegin(int lvl = 1)
     {
         lvlDisplay.SetLevel(currLevel);
-        obstacleManager.numObstacles = (int)Mathf.Min((float)currLevel, (float)maxObstacles);
+        /*obstacleManager.numObstacles = (int)Mathf.Min((float)currLevel, (float)maxObstacles);*/
         obstacleManager.SpawnObstacles();
         enemyManager.Launch();
         ballManager.Enable();

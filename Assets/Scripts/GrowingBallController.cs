@@ -160,9 +160,10 @@ public class GrowingBallController : MonoBehaviour
             collision.gameObject.CompareTag("Obstacle");
     }
 
-    public bool isContainedInCollider()
+    public bool isContainedInAForbiddenCollider()
     {
-        if (currentCollision == null)
+        // everything is contained in the world bounds
+        if (currentCollision == null || currentCollision.gameObject.CompareTag("WorldBounds"))
             return false;
 
         return currentCollision.bounds.Contains(transform.position);
