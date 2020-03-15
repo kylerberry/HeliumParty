@@ -14,7 +14,6 @@ public class GrowingBallController : MonoBehaviour
 
     private bool hasRoomToGrow = true;
     private bool destroyedByEnemy = false;
-    private bool collidingObstacle = false;
     private Vector3 cachedInputPosition;
     private Vector3 minScale = new Vector3(0.5f, 0.5f);
 

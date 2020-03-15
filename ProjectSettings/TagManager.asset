@@ -10,6 +10,7 @@ TagManager:
   - ReleasedBall
   - GrowingBall
   - Obstacle
+  - Powerup
   layers:
   - Default
   - TransparentFX

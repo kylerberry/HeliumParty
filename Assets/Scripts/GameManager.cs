@@ -27,7 +27,8 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         // get child references
-        for (int i = 0; i < gameObject.transform.childCount; i++) {
+        for (int i = 0; i < gameObject.transform.childCount; i++)
+        {
             GameObject child = gameObject.transform.GetChild(i).gameObject;
             switch (child.transform.name)
             {
