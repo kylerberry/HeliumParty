@@ -15,10 +15,15 @@ public class BallGenerator : MonoBehaviour
     bool clickEnabled = false;
 
     public float ballCoverage = 0.0f;
+
+    GameManager gameManager;
+    EnemyGenerator enemyManager;
     
     // Start is called before the first frame update
     void Start()
     {
+        gameManager = gameObject.GetComponentsInParent<GameManager>()[0];
+        enemyManager = gameObject.transform.parent.gameObject.GetComponentInChildren<EnemyGenerator>();
         obstacleManager = GameObject.Find("ObstacleManager");
         releasedBalls = new List<GameObject>();
     }

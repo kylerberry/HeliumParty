@@ -13,6 +13,7 @@ public class ReleasedBallController : MonoBehaviour
     // only play inertia effect if object has enough inertia (mass * acceleration)
     // negative because gravity pulls down (may need to change on gravity flip)
     private float minDustInertia = -10.0f;
+    public bool shrinkOverTime = false;
 
     private void Awake()
     {
@@ -47,7 +48,7 @@ public class ReleasedBallController : MonoBehaviour
         }
 
         // make balls shrink over time
-        if (coll.bounds.size.x > minSize.x)
+        if (shrinkOverTime && coll.bounds.size.x > minSize.x)
         {
             gameObject.transform.localScale -= new Vector3(0.15f * Time.deltaTime, 0.15f * Time.deltaTime);
         }
