@@ -51,6 +51,7 @@ public class BallGenerator : MonoBehaviour
             coverage += ball.GetComponent<ReleasedBallController>().GetArea();
         }
         ballCoverage = coverage;
+        gameObject.SendMessageUpwards("UpdateCoverage", ballCoverage);
     }
 
     public void Reset()
@@ -164,5 +165,6 @@ public class BallGenerator : MonoBehaviour
         {
             UpdateBallCoverage();
         }
+        
     }
 }

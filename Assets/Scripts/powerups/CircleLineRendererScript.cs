@@ -6,6 +6,7 @@ public class CircleLineRendererScript : MonoBehaviour
     public int segments;
     public float xradius = 1.0f;
     public float yradius = 1.0f;
+    public float totalAngle = 360;
     LineRenderer line;
 /*    float lineMinWidth = 0.05f;
     float lineMaxWidth = 0.15f;
@@ -45,7 +46,7 @@ public class CircleLineRendererScript : MonoBehaviour
 
             line.SetPosition(i, new Vector3(x, y, z));
 
-            angle += (360f / segments);
+            angle += (totalAngle / segments);
         }
     }
 }

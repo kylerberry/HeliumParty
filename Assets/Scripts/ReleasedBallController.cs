@@ -18,7 +18,7 @@ public class ReleasedBallController : MonoBehaviour
     private void Awake()
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
-        coll = gameObject.GetComponent<CircleCollider2D>();
+        coll = transform.Find("TriggerCollider").GetComponent<CircleCollider2D>();
         minSize = coll.bounds.size;
     }
 
@@ -27,7 +27,7 @@ public class ReleasedBallController : MonoBehaviour
         // new position is relative to this ball transform
         // subtract the 2 world positions to get the correct vector from 0,0
         Vector2 line = position - transform.position;
-        ParticleSystem dust = gameObject.transform.GetChild(1).GetComponent<ParticleSystem>();
+        ParticleSystem dust = gameObject.transform.GetChild(2).GetComponent<ParticleSystem>();
         ParticleSystem.ShapeModule dustShape = dust.shape;
 
         // Get the angle of the tangent line to determine rotation of the dust cloud
@@ -41,7 +41,7 @@ public class ReleasedBallController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // hack to make any balls that fall out of the world destroy themselves so they can free up memory
+        // make any balls that fall out of the world destroy themselves so they can free up memory
         if (transform.position.y <= -50)
         {
             Destroy(gameObject);

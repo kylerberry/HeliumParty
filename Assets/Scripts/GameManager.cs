@@ -7,11 +7,13 @@ public class GameManager : MonoBehaviour
     EnemyGenerator enemyManager;  
     EdgeCreator worldBounds;
     LevelDisplayController lvlDisplay;
-    LevelProgressDisplay progressDisplay;
+    ProgressPie progressPie;
     GameObject gameOver;
     BallGenerator ballManager;
     LifeDisplay lifeDisplay;
     ObstacleGenerator obstacleManager;
+    BackgroundBehavior background;
+/*    FillerFeedbackScript feedback;*/
 
     public int currLevel = 3;
 
@@ -26,39 +28,17 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        // get child references
-        for (int i = 0; i < gameObject.transform.childCount; i++)
-        {
-            GameObject child = gameObject.transform.GetChild(i).gameObject;
-            switch (child.transform.name)
-            {
-                case "WorldBounds":
-                    // use the first child of world bound because parent is just a trigger collider
-                    worldBounds = child.transform.GetChild(0).GetComponent<EdgeCreator>();
-                    break;
-                case "EnemyManager":
-                    enemyManager = child.GetComponent<EnemyGenerator>();
-                    break;
-                case "BallManager":
-                    ballManager = child.GetComponent<BallGenerator>();
-                    break;
-                case "GameStatsBar":
-                    // @todo this is a little thin, better to just look for the parent gameStatsBar wrap apis
-                    lvlDisplay = child.transform.GetChild(1).GetComponent<LevelDisplayController>();
-                    progressDisplay = child.transform.GetChild(2).GetComponent<LevelProgressDisplay>();
-                    lifeDisplay = child.transform.GetChild(3).GetComponent<LifeDisplay>();
-                    break;
-                case "GameOver":
-                    gameOver = child;
-                    break;
-                case "ObstacleManager":
-                    obstacleManager = child.GetComponent<ObstacleGenerator>();
-                    break;
-                default:
-                    Debug.Log(child.transform.name + " Not Assigned.");
-                    break;
-            }
-        }
+        worldBounds = transform.Find("WorldBounds").GetChild(0).GetComponent<EdgeCreator>();
+        enemyManager = transform.Find("EnemyManager").GetComponent<EnemyGenerator>();
+        ballManager = transform.Find("BallManager").GetComponent<BallGenerator>();
+        lvlDisplay = transform.Find("GameStatsBar").Find("LevelDisplay").GetComponent<LevelDisplayController>();
+        lifeDisplay = transform.Find("GameStatsBar").Find("LifeDisplay").GetComponent<LifeDisplay>();
+        gameOver = transform.Find("GameOver").gameObject;
+        obstacleManager = transform.Find("ObstacleManager").GetComponent<ObstacleGenerator>();
+        background = transform.Find("Background").GetComponent<BackgroundBehavior>();
+        /*feedback = transform.Find("FilledFeedback").GetComponent<FillerFeedbackScript>();*/
+        progressPie = transform.Find("GameStatsBar").Find("ProgressPie").GetComponent<ProgressPie>();
+
 
         // kickstart the first level
         enemyManager.numEnemies = currLevel;
@@ -80,16 +60,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         // update progress UI
-        progressDisplay.SetProgressPercent((ballManager.ballCoverage / worldBounds.Area()) / levelCriteria);
-
-        if (ballManager.ballCoverage / worldBounds.Area() >= levelCriteria)
-        {
-            // End Level Lifecycle
-            ballManager.Disable();
-            obstacleManager.ClearObstacles();
-            worldBounds.DisableCollider();
-            transitioningLevel = true;
-        }
+       /* progressPie.SetProgress((ballManager.ballCoverage / worldBounds.Area()) / levelCriteria);*/
 
         if (transitioningLevel && EveryBallHasClearedWorldbounds())
         {
@@ -105,6 +76,22 @@ public class GameManager : MonoBehaviour
         lastNumLives = numLives;
     }
 
+    public void UpdateCoverage(float ballCoverage)
+    {
+        if (ballCoverage / worldBounds.Area() >= levelCriteria)
+        {
+            // End Level Lifecycle
+            ballManager.Disable();
+            obstacleManager.ClearObstacles();
+            worldBounds.DisableCollider();
+            transitioningLevel = true;
+        }
+       /* Debug.Log(ballManager.ballCoverage);
+        Debug.Log((ballManager.ballCoverage / (worldBounds.Area() * levelCriteria)));
+        Debug.Log((ballManager.ballCoverage / worldBounds.Area()) / levelCriteria);*/
+        progressPie.SetProgress((ballManager.ballCoverage / worldBounds.Area()) / levelCriteria);
+    }
+
     public void LevelReset()
     {
         // re-enable edge
@@ -113,6 +100,7 @@ public class GameManager : MonoBehaviour
         // reset enemy and ball manager
         ballManager.Reset();
         enemyManager.Reset();
+        progressPie.SetProgress(0);
     }
 
     public void LevelIncrease(int amount = 0)

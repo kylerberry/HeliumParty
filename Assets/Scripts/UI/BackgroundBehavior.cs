@@ -26,6 +26,6 @@ public class BackgroundBehavior : MonoBehaviour
             transform.position = originalPosition;
             timeElapsed = 0;
         }
-        transform.position += new Vector3(0.3f * Time.deltaTime, 0.3f * Time.deltaTime, 0.0f);
+        transform.position += new Vector3(1.0f * Time.deltaTime, 1.0f * Time.deltaTime, 0.0f);
     }
 }
