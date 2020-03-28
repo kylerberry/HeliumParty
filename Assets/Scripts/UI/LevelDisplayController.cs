@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class LevelDisplayController : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class LevelDisplayController : MonoBehaviour
     // Set the level display text 
     public void SetLevel(int num)
     {
-        gameObject.GetComponent<TextMesh>().text = "Level - " + num;
+        gameObject.GetComponent<TextMeshPro>().text = "Level - " + num;
     }
 
     public void setVisibility(bool visible)

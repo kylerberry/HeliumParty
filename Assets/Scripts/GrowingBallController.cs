@@ -32,7 +32,7 @@ public class GrowingBallController : MonoBehaviour
     // returns the area of the current circle
     public float GetArea()
     {
-        return Mathf.PI * Mathf.Pow(coll.bounds.size.x / 2, 2);
+        return Mathf.PI * Mathf.Pow(GetRadius(), 2);
     }
 
     //handles an ongoing input, whether it's mouse or touch

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class LifeDisplay : MonoBehaviour
 {
@@ -12,9 +13,10 @@ public class LifeDisplay : MonoBehaviour
 
     public void SetLife(int amount)
     {
-        if (amount < 0)
+        amount -= 1;
+        if (amount <= 0)
             amount = 0;
-        gameObject.GetComponent<TextMesh>().text = "x " + amount;
+        gameObject.GetComponent<TextMeshPro>().text = "x " + amount;
     }
 
     // Update is called once per frame
