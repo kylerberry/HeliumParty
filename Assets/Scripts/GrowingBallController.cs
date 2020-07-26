@@ -7,7 +7,7 @@ public class GrowingBallController : MonoBehaviour
     private SpriteRenderer sr;
     private Rigidbody2D rb;
     private CircleCollider2D coll;
-    private ParticleSystem popEffect;
+    private PopEffectBehavior popEffect;
 
     public float growRate = 10.0f;
     public Vector3 minSize;
@@ -24,7 +24,7 @@ public class GrowingBallController : MonoBehaviour
         rb = gameObject.GetComponent<Rigidbody2D>();
         sr = gameObject.GetComponent<SpriteRenderer>();
         coll = gameObject.GetComponent<CircleCollider2D>();
-        popEffect = gameObject.transform.GetChild(0).GetComponent<ParticleSystem>();
+        popEffect = gameObject.transform.GetChild(0).GetComponent<PopEffectBehavior>();
         gameObject.transform.localScale = minScale;
         minSize = coll.bounds.size;
     }
@@ -118,10 +118,6 @@ public class GrowingBallController : MonoBehaviour
         // hide the sprite
         sr.enabled = false;
 
-        // particle system radius explodes at the unreleased ball radius
-        var shape = popEffect.shape;
-        shape.radius = GetRadius();
-
         // hide the ball collider
         coll.enabled = false;
         
@@ -132,7 +128,7 @@ public class GrowingBallController : MonoBehaviour
         gameObject.SendMessageUpwards("IncrementLife", -1);
 
         // play the particle effect
-        popEffect.Play();
+        popEffect.Explode(GetRadius());
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
